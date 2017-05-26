@@ -43,9 +43,9 @@ void on_message(const std::shared_ptr<vsomeip::message> &_request){
     // std::vector <vsomeip::byte_t> its_payload_data((std::istreambuf_iterator<vsomeip::byte_t>(sample_text)),
             // std::istreambuf_iterator<vsomeip::byte_t>());
 
-    // for(int i=9; i>=0; i--){
-    //     its_payload_data.push_back(i % 256);
-    // }
+    for(int i=9; i>=0; i--){
+        its_payload_data.push_back(i % 256);
+    }
 
     //Fetch Camera gain and send back
     int gain = grabber.getCameraGain();
@@ -60,16 +60,16 @@ void on_message(const std::shared_ptr<vsomeip::message> &_request){
 int main(){
     std::cout << "Starting Service example" << std::endl;
 
-    app = vsomeip::runtime::get()->create_application("Jhingalala");
+    app = vsomeip::runtime::get()->create_application("World");
     app->init();
     app->register_message_handler(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_METHOD_ID, on_message);
     app->offer_service(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID);
        
-    grabber.InitOpenNI();    
-    grabber.InitDevice();
-    grabber.InitDepthStream();
-    grabber.InitColorStream();
-    std::cout<< "Initialized Camera Streams!" << std::endl;
+    // grabber.InitOpenNI();    
+    // grabber.InitDevice();
+    // grabber.InitDepthStream();
+    // grabber.InitColorStream();
+    // std::cout<< "Initialized Camera Streams!" << std::endl;
 
 #ifdef PUB_SUB
     const vsomeip::byte_t its_data[] = {0x10};

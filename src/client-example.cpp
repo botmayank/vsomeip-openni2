@@ -15,11 +15,12 @@
 #define SAMPLE_EVENTGROUP_ID 0x0666
 #define SAMPLE_EVENT_ID 0x0667
 
-#define PUB_SUB
+//#define PUB_SUB
 
 std::shared_ptr <vsomeip::application> app;
 std::mutex mutex;
 std::condition_variable condition;
+bool use_tcp = true;
 
 #ifndef PUB_SUB
 void run(){
@@ -27,7 +28,7 @@ void run(){
 	condition.wait(its_lock);
 
 	std::shared_ptr < vsomeip::message > request;
-	request = vsomeip::runtime::get()->create_request();
+	request = vsomeip::runtime::get()->create_request(use_tcp);
 	request->set_service(SAMPLE_SERVICE_ID);
 	request->set_instance(SAMPLE_INSTANCE_ID);
 	request->set_method(SAMPLE_METHOD_ID);
@@ -38,11 +39,11 @@ void run(){
 	// for(vsomeip::byte_t i = 0; i< 10; i++){
 	// 	its_payload_data.push_back(i%256);
 	// }
-  its_payload_data.push_back(0); //Dummydata for request
+  	its_payload_data.push_back(0); //Dummydata for request
 
 	its_payload->set_data(its_payload_data);
 	request->set_payload(its_payload);
-  // std::cout << "Requesting Camera Gain!" << std::endl;
+  	std::cout << "Requesting Camera Gain!" << std::endl;
 
 	app->send(request, true);
 }

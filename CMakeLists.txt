@@ -3,7 +3,7 @@ cmake_minimum_required (VERSION 2.0)
 set (CMAKE_CXX_FLAGS "-g -std=c++0x")
 
 find_package (vsomeip 2.6.0 REQUIRED)
-find_package ( Boost 1.58 COMPONENTS system thread log REQUIRED)
+find_package ( Boost 1.55 COMPONENTS system thread log REQUIRED)
 
 set(
     CMAKE_RUNTIME_OUTPUT_DIRECTORY

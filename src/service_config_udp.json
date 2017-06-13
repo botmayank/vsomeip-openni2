@@ -19,13 +19,13 @@
         {
             "service" : "0x1234",
             "instance" : "0x5678",
-            "reliable" : { "port" : "30509", "enable-magic-cookies" : "false" },
+            "unreliable" : "30509",
             "events":
             [
                 {
                     "event" : "0x0667",
                     "is_field" : "false", 
-                    "update-cycle" : "2000"
+                    "update-cycle" : 2000
                 }
             ],
             "eventgroups" :

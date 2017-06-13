@@ -14,7 +14,7 @@
             "id" : "0x1313"
         } 
     ],
-    "routing" : "Hello",
+    "routing" : "World",
     "service-discovery" :
     {
         "enable" : "true",

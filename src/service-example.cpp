@@ -7,6 +7,8 @@
 #include <vsomeip/vsomeip.hpp>
 #include "grabber.hpp"
 
+#include "/home/hyp/Documents/jonmay/vsomeip/implementation/logging/include/logger.hpp"
+
 #define SAMPLE_SERVICE_ID 0x1234
 #define SAMPLE_INSTANCE_ID 0x5678
 #define SAMPLE_METHOD_ID 0x0421
@@ -41,19 +43,19 @@ void on_message(const std::shared_ptr<vsomeip::message> &_request){
     //Create response
     std::shared_ptr <vsomeip::message> its_response = vsomeip::runtime::get()->create_response(_request);
     its_payload = vsomeip::runtime::get()->create_payload();
-    // std::vector <vsomeip::byte_t> its_payload_data;
+    std::vector <vsomeip::byte_t> its_payload_data;
 
-    std::cout << "Creating response" << std::endl;
-    std::ifstream file("cat.jpg", std::ios::binary);
+    // std::cout << "Creating response" << std::endl;
+    // std::ifstream file("cat.jpg", std::ios::binary);
 
     // read the data:
-    std::vector<vsomeip::byte_t> its_payload_data((std::istreambuf_iterator<char>(file)),
-                              std::istreambuf_iterator<char>());
+    // std::vector<vsomeip::byte_t> its_payload_data((std::istreambuf_iterator<char>(file)),
+                              // std::istreambuf_iterator<char>());
     std::cout<< "Sending file contents" << std::endl;
 
-    // for(int i=13; i>=0; i--){
-    //     its_payload_data.push_back(i % 256);
-    // }
+    for(int i=13; i>=0; i--){
+        its_payload_data.push_back(i % 256);
+    }
 
     // Fetch Camera gain and send back
     // int gain = grabber.getCameraGain();
@@ -79,8 +81,7 @@ void notify_event(){
     
 } 
 int main(){
-    std::cout << "Starting Service example" << std::endl;
-
+    VSOMEIP_INFO << "Starting Service example";
     app = vsomeip::runtime::get()->create_application("World");
     app->init();
     app->register_message_handler(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_METHOD_ID, on_message);

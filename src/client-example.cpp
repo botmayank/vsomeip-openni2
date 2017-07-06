@@ -6,7 +6,7 @@
 #include <thread>
 
 #include <vsomeip/vsomeip.hpp>
-
+#include "../../vsomeip/implementation/logging/include/logger.hpp"
 
 #define SAMPLE_SERVICE_ID 0x1234
 #define SAMPLE_INSTANCE_ID 0x5678
@@ -110,7 +110,8 @@ void on_message(const std::shared_ptr<vsomeip::message> &_response) {
 
 
 void on_availability(vsomeip::service_t _service, vsomeip::instance_t _instance, bool _is_available) {
-    std::cout << "CLIENT: Service ["
+   // std::cout << 
+    VSOMEIP_INFO<< "CLIENT: Service ["
             << std::setw(4) << std::setfill('0') << std::hex << _service << "." << _instance
             << "] is "
             << (_is_available ? "available." : "NOT available.")
@@ -121,7 +122,7 @@ void on_availability(vsomeip::service_t _service, vsomeip::instance_t _instance,
 }
 
 int main() {
-
+    VSOMEIP_INFO<< "Starting Client example";
     app = vsomeip::runtime::get()->create_application("Hello");
     app->init();
     app->register_availability_handler(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, on_availability);

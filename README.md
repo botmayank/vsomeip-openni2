@@ -4,8 +4,7 @@ A use case demonstrating SOME/IP communication between two Linux embedded boards
 The project uses the vsomeip library from GENIVI [vsomeip](https://github.com/GENIVI/vsomeip). 
 
 ## Hardware setup:
-ASUS Xtion Pro --> Raspberry Pi --> Ethernet Switch <--- Kontron pITX-E38 board
-|<------Ethernet Camera unit----->|
+ASUS Xtion Pro --> Raspberry Pi (Ethernet Camera Unit) --> Ethernet Switch <--- Kontron pITX-E38 board
 
 ## License:
 GNU General Public License v3.0

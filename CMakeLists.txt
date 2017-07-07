@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 2.0)
 
-set (CMAKE_CXX_FLAGS "-g -std=c++0x")
+set (CMAKE_CXX_FLAGS "-g -std=c++0x -DBOOST_LOG_DYN_LINK")
 
 find_package (vsomeip 2.6.0 REQUIRED)
 find_package ( Boost 1.55 COMPONENTS system thread log REQUIRED)

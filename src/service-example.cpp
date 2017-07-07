@@ -7,7 +7,7 @@
 #include <vsomeip/vsomeip.hpp>
 #include "grabber.hpp"
 
-#include "/home/hyp/Documents/jonmay/vsomeip/implementation/logging/include/logger.hpp"
+#include "../../../../vsomeip/implementation/logging/include/logger.hpp"
 
 #define SAMPLE_SERVICE_ID 0x1234
 #define SAMPLE_INSTANCE_ID 0x5678

@@ -12,13 +12,13 @@ import os
 import re
 import csv
 
-config_path = "../src/service_config.json"
+config_path = "../src/client_config.json"
 
 os.environ["VSOMEIP_CONFIGURATION"] = config_path
 
 total_measurements = 1
 
-cmd = " ../bin/service-example"
+cmd = " ../bin/client-example"
 m_num = 1
 measurement_output = "readings/measurement" + str(m_num) + ".csv"
 
@@ -59,7 +59,7 @@ def parse(fileno):
                 start_time = re.search(r'\d\d\.\d{6}', line).group()
                 reading.append(start_time)
                 # print "Started at: " + start_time
-            elif (line.find("Routing is Dhinchak!") != -1):
+            elif (line.find("Routing is READY!") != -1):
                 # print line
                 routing_time = re.search(r'\d\d\.\d{6}', line).group()
                 # print "Routing ready at: " + routing_time

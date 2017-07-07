@@ -12,7 +12,7 @@ import os
 import re
 import csv
 
-config_path = "/home/hyp/Documents/jonmay/thesis_work/someip_apps/vsomeip-openni2/src/service_config.json"
+config_path = "../src/service_config.json"
 
 os.environ["VSOMEIP_CONFIGURATION"] = config_path
 

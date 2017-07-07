@@ -1,23 +1,21 @@
-2017-07-06 23:52:07.088548 [info] Parsed vsomeip configuration in 0ms
-2017-07-06 23:52:07.088664 [info] Using configuration file: "/home/hyp/Documents/jonmay/thesis_work/someip_apps/vsomeip-openni2/src/service_config.json".
-2017-07-06 23:52:07.088695 [info] Default configuration module loaded.
-2017-07-06 23:52:07.088717 [info] Initializing vsomeip application "World".
-2017-07-06 23:52:07.088869 [info] SOME/IP client identifier configured. Using 1212 (was: 1212)
-2017-07-06 23:52:07.088895 [info] Instantiating routing manager [Host].
-2017-07-06 23:52:07.088964 [info] init_routing_endpoint Routing endpoint at /tmp/vsomeip-0
-2017-07-06 23:52:07.089066 [info] Client [1212] is connecting to [0] at /tmp/vsomeip-0
-2017-07-06 23:52:07.089112 [info] Service Discovery enabled. Trying to load module.
-2017-07-06 23:52:07.089401 [info] Service Discovery module loaded.
-2017-07-06 23:52:07.089478 [info] Application(World, 1212) is initialized (11, 100).
-2017-07-06 23:52:07.089512 [info] OFFER(1212): [1234.5678:0.0]
-2017-07-06 23:52:07.089606 [info] Starting vsomeip application "World" using 2 threads
-2017-07-06 23:52:07.089780 [info] Watchdog is disabled!
-2017-07-06 23:52:07.089860 [info] vSomeIP 2.6.2
-2017-07-06 23:52:07.090114 [info] Network interface "enp0s25" is up and running.
-2017-07-06 23:52:07.090389 [info] Routing is Dhinchak!
-[2017-07-06 23:52:07.087207] [0x00007f5f78e86ec0] [info]    Starting Service example
-SERVICE: Received message with Client/Session [1313/0001] 00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 
-Sending file contents
-2017-07-06 23:52:09.047018 [info] Stopping vsomeip application "World".
-2017-07-06 23:52:09.047631 [info] utility::auto_configuration_exit: munmap succeeded.
-2017-07-06 23:52:09.047754 [info] Exiting vsomeip application...
+2017-07-07 13:30:19.795598 [info] Parsed vsomeip configuration in 0ms
+2017-07-07 13:30:19.795705 [info] Using configuration file: "../src/service_config.json".
+2017-07-07 13:30:19.795732 [info] Default configuration module loaded.
+2017-07-07 13:30:19.795752 [info] Initializing vsomeip application "World".
+2017-07-07 13:30:19.795903 [info] SOME/IP client identifier configured. Using 1212 (was: 1212)
+2017-07-07 13:30:19.795926 [info] Instantiating routing manager [Host].
+2017-07-07 13:30:19.795981 [info] init_routing_endpoint Routing endpoint at /tmp/vsomeip-0
+2017-07-07 13:30:19.796072 [info] Client [1212] is connecting to [0] at /tmp/vsomeip-0
+2017-07-07 13:30:19.796103 [info] Service Discovery enabled. Trying to load module.
+2017-07-07 13:30:19.796385 [info] Service Discovery module loaded.
+2017-07-07 13:30:19.796453 [info] Application(World, 1212) is initialized (11, 100).
+2017-07-07 13:30:19.796486 [info] OFFER(1212): [1234.5678:0.0]
+2017-07-07 13:30:19.796572 [info] Starting vsomeip application "World" using 2 threads
+2017-07-07 13:30:19.796746 [info] Watchdog is disabled!
+2017-07-07 13:30:19.796908 [info] vSomeIP 2.6.2
+2017-07-07 13:30:19.796997 [info] Network interface "enp0s25" is up and running.
+2017-07-07 13:30:19.797158 [info] Routing is Dhinchak!
+2017-07-07 13:30:21.756035 [info] Stopping vsomeip application "World".
+2017-07-07 13:30:21.756916 [info] utility::auto_configuration_exit: munmap succeeded.
+2017-07-07 13:30:21.757002 [info] Exiting vsomeip application...
+[2017-07-07 13:30:19.794125] [0x00007f5a8f2bcec0] [info]    Starting Service example

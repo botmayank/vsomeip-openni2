@@ -37,7 +37,7 @@ def end_script(p, outfile):
 def run_measurement(index):
     proc, outfile = start_script(index)
     # Time to output all messages by daemon
-    time.sleep(2)    
+    time.sleep(4)    
     end_script(proc, outfile)
 
 # Find the timestamp for application start, config parsed, routing ready in each text file
@@ -45,6 +45,7 @@ def parse(fileno):
     start_time = 0
     parse_time = 0
     routing_time = 0
+    service_time = 0
     reading = []
 
     with open("readings/"+ str(fileno) + ".txt") as f:
@@ -53,18 +54,24 @@ def parse(fileno):
                 # print line
                 parse_time = re.search(r'\d\d\.\d{6}', line).group()
                 reading.append(parse_time)
-                # print "Parsed at: " + parse_time
-            elif (line.find("Starting Service example") != -1):
+                print "Parsed at: " + parse_time
+            elif (line.find("Starting Client example") != -1):
                 # print line
                 start_time = re.search(r'\d\d\.\d{6}', line).group()
                 reading.append(start_time)
-                # print "Started at: " + start_time
+                print "Started at: " + start_time
             elif (line.find("Routing is READY!") != -1):
                 # print line
                 routing_time = re.search(r'\d\d\.\d{6}', line).group()
-                # print "Routing ready at: " + routing_time
+                print "Routing ready at: " + routing_time
                 reading.append(routing_time)
-
+            elif (line.find("is available.")!= -1):
+                service_time = re.search(r'\d\d\.\d{6}', line).group()
+                print "Service discovered at: " + service_time
+                reading.append(service_time)
+   
+    if start_time == 0:
+         print "Didn't get start time!"
     # Additionally, add time for routing to be ready and config to be parsed in milliseconds
     routing_time = (float(routing_time) - float(start_time))*1000
     parse_time = (float(parse_time) - float(start_time))*1000

@@ -81,7 +81,7 @@ void notify_event(){
     
 } 
 int main(){
-    VSOMEIP_INFO << "Starting Service example";
+    VSOMEIP_INFO << "Starting service example";
     app = vsomeip::runtime::get()->create_application("World");
     app->init();
     app->register_message_handler(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_METHOD_ID, on_message);

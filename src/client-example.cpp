@@ -111,7 +111,7 @@ void on_message(const std::shared_ptr<vsomeip::message> &_response) {
 
 
 void on_availability(vsomeip::service_t _service, vsomeip::instance_t _instance, bool _is_available) {
-    std::cout << "CLIENT: Service ["
+    VSOMEIP_INFO << "CLIENT: Service ["
             << std::setw(4) << std::setfill('0') << std::hex << _service << "." << _instance
             << "] is "
             << (_is_available ? "available." : "NOT available.")

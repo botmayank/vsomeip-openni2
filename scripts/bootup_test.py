@@ -71,12 +71,12 @@ def parse(fileno, fieldnames):
                 start_time = re.search(r'\d\d\.\d{6}', line).group()
                 reading['start_timestamp'] = start_time
                 print "Started at: " + start_time
-            elif (line.find("Routing is Dhinchak!") != -1):
+            elif (line.find("Routing is READY!") != -1):
                 # print line
                 routing_time = re.search(r'\d\d\.\d{6}', line).group()
                 print "Routing ready at: " + routing_time
             elif (line.find("is available.") != -1):
-                service_time = re.search(r'\d\d.\d{6}', line).group()
+                service_time = re.search(r'\d\d\.\d{6}', line).group()
                 print "Service discovered at: " + service_time
     
     if(not float(start_time)):

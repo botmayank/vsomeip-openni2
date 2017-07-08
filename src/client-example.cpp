@@ -15,7 +15,7 @@
 #define SAMPLE_EVENTGROUP_ID 0x0666
 #define SAMPLE_EVENT_ID 0x0667
 
-#define PUB_SUB
+//#define PUB_SUB
 
 std::shared_ptr <vsomeip::application> app;
 std::mutex mutex;

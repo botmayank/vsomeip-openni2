@@ -1,5 +1,5 @@
 {
-    "unicast" : "192.168.0.101",
+    "unicast" : "192.168.0.106",
     "logging" :
     {
         "level" : "debug",
@@ -14,7 +14,7 @@
             "id" : "0x1313"
         } 
     ],
-    "routing" : "World",
+    "routing" : "Hello",
     "service-discovery" :
     {
         "enable" : "true",

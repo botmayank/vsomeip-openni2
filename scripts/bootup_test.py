@@ -76,7 +76,7 @@ def parse(fileno, fieldnames):
                 routing_time = re.search(r'\d\d\.\d{6}', line).group()
                 print "Routing ready at: " + routing_time
             elif (line.find("is available.") != -1):
-                service_time = re.search(r'\d\d.\d{6}', line).group()
+                service_time = re.search(r'\d\d\.\d{6}', line).group()
                 print "Service discovered at: " + service_time
     
     if(not float(start_time)):

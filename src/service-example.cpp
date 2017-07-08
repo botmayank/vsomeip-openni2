@@ -16,7 +16,7 @@
 #define SAMPLE_EVENTGROUP_ID 0x0666
 #define SAMPLE_EVENT_ID 0x0667
 
-// #define PUB_SUB
+#define PUB_SUB
 #define VSOMEIP_ENABLE_SIGNAL_HANDLING
 
 std::shared_ptr <vsomeip::application> app;
@@ -74,9 +74,9 @@ void notify_event(){
     while(true){
         its_data[0]++;
         payload->set_data(its_data, sizeof(its_data));
-        std::cout<<"Sending data!"<< std::endl;
+        VSOMEIP_INFO<<"Sending data!"<< std::endl;
         app->notify(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_EVENT_ID, payload);
-        // std::this_thread::sleep_for(std::chrono::milliseconds(1000)); 
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000)); 
     }
     
 } 
@@ -98,7 +98,7 @@ int main(){
     std::set<vsomeip::eventgroup_t> its_groups;
     its_groups.insert(SAMPLE_EVENTGROUP_ID);
     app->offer_event(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_EVENT_ID, its_groups, true);
-    std::cout<< "Offered event, set to notify with payload" << std::endl; 
+    VSOMEIP_INFO<< "Offered event, set to notify with payload" << std::endl; 
    
     std::thread notifier(notify_event);
 #endif

@@ -1,11 +1,12 @@
 #include <iomanip>
 #include <iostream>
 #include <sstream>
-#include <fstream>
+
 #include <condition_variable>
 #include <thread>
 
 #include <vsomeip/vsomeip.hpp>
+
 #include "../../vsomeip/implementation/logging/include/logger.hpp"
 
 #define SAMPLE_SERVICE_ID 0x1234
@@ -20,7 +21,6 @@
 std::shared_ptr <vsomeip::application> app;
 std::mutex mutex;
 std::condition_variable condition;
-bool use_tcp = true;
 
 #ifndef PUB_SUB
 void run(){
@@ -28,7 +28,7 @@ void run(){
 	condition.wait(its_lock);
 
 	std::shared_ptr < vsomeip::message > request;
-	request = vsomeip::runtime::get()->create_request(use_tcp);
+	request = vsomeip::runtime::get()->create_request();
 	request->set_service(SAMPLE_SERVICE_ID);
 	request->set_instance(SAMPLE_INSTANCE_ID);
 	request->set_method(SAMPLE_METHOD_ID);
@@ -36,10 +36,10 @@ void run(){
 	std::shared_ptr<vsomeip::payload> its_payload = vsomeip::runtime::get()->create_payload();
 	std::vector<vsomeip::byte_t > its_payload_data;
 
-	for(vsomeip::byte_t i = 0; i< 14; i++){
-	 	its_payload_data.push_back(i%256);
-	 }
-  	//its_payload_data.push_back(0); //Dummydata for request
+	// for(vsomeip::byte_t i = 0; i< 10; i++){
+	// 	its_payload_data.push_back(i%256);
+	// }
+  its_payload_data.push_back(0); //Dummydata for request
 
 	its_payload->set_data(its_payload_data);
 	request->set_payload(its_payload);
@@ -47,14 +47,18 @@ void run(){
 
 	app->send(request, true);
 }
-#else
+#endif
+
+#ifdef PUB_SUB
 void run() {
   std::unique_lock<std::mutex> its_lock(mutex);
   condition.wait(its_lock);
 
   std::set<vsomeip::eventgroup_t> its_groups;
   its_groups.insert(SAMPLE_EVENTGROUP_ID);
+  std::cout<< "Requesting event" << std::endl;
   app->request_event(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_EVENT_ID, its_groups, true);
+  std::cout<< "Subscribing to event" << std::endl;
   app->subscribe(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_EVENTGROUP_ID);
 
 }
@@ -64,27 +68,24 @@ void run() {
 void on_message(const std::shared_ptr<vsomeip::message> &_response){
 
 	std::shared_ptr<vsomeip::payload> its_payload = _response->get_payload();
-//	vsomeip::length_t l = its_payload->get_length();
+	vsomeip::length_t l = its_payload->get_length();
 
 	//Get payload
-//	std::stringstream ss;
-//	for(vsomeip::length_t i = 0; i<l; i++){
-//		ss << std::setw(2) << std::setfill('0')
-//			<< (int)*(its_payload->get_data()+i) << " ";
-//	}
-	std::cout<< "Writing message to file" << std::endl;
-	std::ofstream outfile("example_recv.jpg", std::ios::out | std::ios::binary);
-	outfile.write(reinterpret_cast<const char*> (its_payload->get_data()), its_payload->get_length());
+	std::stringstream ss;
+	for(vsomeip::length_t i = 0; i<l; i++){
+		ss << std::setw(2) << std::setfill('0')
+			<< (int)*(its_payload->get_data()+i) << " ";
+	}
 
 	std::cout << "CLIENT: Received message with Client/Session ["
       << std::setw(4) << std::setfill('0') << std::hex << _response->get_client() << "/"
       << std::setw(4) << std::setfill('0') << std::hex << _response->get_session() << "] "
-      //<< std::endl << "Gain Value of camera as per remote host is: "
-//      << ss.str() 
-	<< std::endl;
+      << std::endl << "Gain Value of camera as per remote host is: "
+      << ss.str() << std::endl;
 }
+#endif
 
-#else
+#ifdef PUB_SUB
 void on_message(const std::shared_ptr<vsomeip::message> &_response) {
     std::stringstream its_message;
     its_message << "CLIENT: received a notification for event ["
@@ -110,8 +111,7 @@ void on_message(const std::shared_ptr<vsomeip::message> &_response) {
 
 
 void on_availability(vsomeip::service_t _service, vsomeip::instance_t _instance, bool _is_available) {
-   // std::cout << 
-    VSOMEIP_INFO<< "CLIENT: Service ["
+    std::cout << "CLIENT: Service ["
             << std::setw(4) << std::setfill('0') << std::hex << _service << "." << _instance
             << "] is "
             << (_is_available ? "available." : "NOT available.")
@@ -122,18 +122,17 @@ void on_availability(vsomeip::service_t _service, vsomeip::instance_t _instance,
 }
 
 int main() {
-    VSOMEIP_INFO<< "Starting Client example";
+VSOMEIP_INFO<< "Starting client example";
     app = vsomeip::runtime::get()->create_application("Hello");
     app->init();
     app->register_availability_handler(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, on_availability);
     app->request_service(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID);
-
-#ifndef PUB_SUB    
+#ifndef PUB_SUB
     app->register_message_handler(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_METHOD_ID, on_message);
 #else
-    app->register_message_handler(vsomeip::ANY_SERVICE, vsomeip::ANY_INSTANCE, vsomeip::ANY_METHOD, on_message);
+     std::cout << "Registering message handler" << std::endl;
+     app->register_message_handler(vsomeip::ANY_SERVICE, vsomeip::ANY_INSTANCE, vsomeip::ANY_METHOD, on_message);
 #endif
-
     std::thread sender(run);
     app->start();
 }

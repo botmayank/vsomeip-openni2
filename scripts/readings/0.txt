@@ -1,30 +1,29 @@
-2017-07-08 20:36:53.039560 [info] Parsed vsomeip configuration in 3ms
-2017-07-08 20:36:53.039981 [info] Using configuration file: "../src/client_config.json".
-2017-07-08 20:36:53.040159 [info] Default configuration module loaded.
-2017-07-08 20:36:53.040299 [info] Initializing vsomeip application "Hello".
-2017-07-08 20:36:53.040758 [info] SOME/IP client identifier configured. Using 1313 (was: 1313)
-2017-07-08 20:36:53.040891 [info] Instantiating routing manager [Host].
-2017-07-08 20:36:53.041199 [info] init_routing_endpoint Routing endpoint at /tmp/vsomeip-0
-2017-07-08 20:36:53.041569 [info] Client [1313] is connecting to [0] at /tmp/vsomeip-0
-2017-07-08 20:36:53.041822 [info] Service Discovery enabled. Trying to load module.
-2017-07-08 20:36:53.042871 [info] Service Discovery module loaded.
-2017-07-08 20:36:53.043165 [info] Application(Hello, 1313) is initialized (11, 100).
-2017-07-08 20:36:53.043340 [info] REQUEST(1313): [1234.5678:255.4294967295]
-2017-07-08 20:36:53.044043 [info] Starting vsomeip application "Hello" using 2 threads
-2017-07-08 20:36:53.044931 [info] Watchdog is disabled!
-2017-07-08 20:36:53.045509 [info] CLIENT: Service [1234.5678] is NOT available.
+2017-07-08 22:43:33.632713 [info] Parsed vsomeip configuration in 3ms
+2017-07-08 22:43:33.633131 [info] Using configuration file: "../src/client_config.json".
+2017-07-08 22:43:33.633310 [info] Default configuration module loaded.
+2017-07-08 22:43:33.633448 [info] Initializing vsomeip application "Hello".
+2017-07-08 22:43:33.633957 [info] SOME/IP client identifier configured. Using 1313 (was: 1313)
+2017-07-08 22:43:33.634099 [info] Instantiating routing manager [Host].
+2017-07-08 22:43:33.634388 [info] init_routing_endpoint Routing endpoint at /tmp/vsomeip-0
+2017-07-08 22:43:33.634762 [info] Client [1313] is connecting to [0] at /tmp/vsomeip-0
+2017-07-08 22:43:33.634947 [info] Service Discovery enabled. Trying to load module.
+2017-07-08 22:43:33.636009 [info] Service Discovery module loaded.
+2017-07-08 22:43:33.636291 [info] Application(Hello, 1313) is initialized (11, 100).
+2017-07-08 22:43:33.636466 [info] REQUEST(1313): [1234.5678:255.4294967295]
+2017-07-08 22:43:33.637162 [info] Starting vsomeip application "Hello" using 2 threads
+2017-07-08 22:43:33.638094 [info] Watchdog is disabled!
+2017-07-08 22:43:33.638756 [info] CLIENT: Service [1234.5678] is NOT available.
 
-2017-07-08 20:36:53.045886 [info] vSomeIP 2.6.2
-2017-07-08 20:36:53.046513 [info] Network interface "eth0" is up and running.
-2017-07-08 20:36:53.047054 [info] Routing is READY!
-2017-07-08 20:36:53.128535 [info] CLIENT: Service [1234.5678] is available.
+2017-07-08 22:43:33.638999 [info] vSomeIP 2.6.2
+2017-07-08 22:43:33.639532 [info] Network interface "eth0" is up and running.
+2017-07-08 22:43:33.640024 [info] Routing is READY!
+2017-07-08 22:43:33.942469 [info] CLIENT: Service [1234.5678] is available.
 
-2017-07-08 20:36:53.129391 [error] Routing error. Client from remote service could not be found!
-2017-07-08 20:36:56.111310 [warning] tcp_client_endpoint receive_cbk error detected: End of file
-2017-07-08 20:36:56.127189 [info] update_routing_info: elapsed=0 : delete service/instance 1234/5678
-2017-07-08 20:36:56.127909 [info] CLIENT: Service [1234.5678] is NOT available.
+2017-07-08 22:43:33.943029 [error] Routing error. Client from remote service could not be found!
+2017-07-08 22:43:36.942395 [info] update_routing_info: elapsed=0 : delete service/instance 1234/5678
+2017-07-08 22:43:36.942890 [info] CLIENT: Service [1234.5678] is NOT available.
 
-2017-07-08 20:36:57.023450 [info] Stopping vsomeip application "Hello".
-2017-07-08 20:36:57.025685 [info] utility::auto_configuration_exit: munmap succeeded.
-2017-07-08 20:36:57.026021 [info] Exiting vsomeip application...
-[2017-07-08 20:36:53.034582] [0x000007fe9771af78] [info]    Starting client example
+2017-07-08 22:43:38.618350 [info] Stopping vsomeip application "Hello".
+2017-07-08 22:43:38.625011 [info] utility::auto_configuration_exit: munmap succeeded.
+2017-07-08 22:43:38.625271 [info] Exiting vsomeip application...
+[2017-07-08 22:43:33.627703] [0x000007f1cb9a4478] [info]    Starting client example

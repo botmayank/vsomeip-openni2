@@ -1,23 +1,29 @@
-2017-07-07 16:31:50.892449 [info] Parsed vsomeip configuration in 3ms
-2017-07-07 16:31:50.892871 [info] Using configuration file: "../src/client_config.json".
-2017-07-07 16:31:50.893049 [info] Default configuration module loaded.
-2017-07-07 16:31:50.893191 [info] Initializing vsomeip application "Hello".
-2017-07-07 16:31:50.893658 [info] SOME/IP client identifier configured. Using 1313 (was: 1313)
-2017-07-07 16:31:50.893791 [info] Instantiating routing manager [Host].
-2017-07-07 16:31:50.894083 [info] init_routing_endpoint Routing endpoint at /tmp/vsomeip-0
-2017-07-07 16:31:50.894447 [info] Client [1313] is connecting to [0] at /tmp/vsomeip-0
-2017-07-07 16:31:50.894660 [info] Service Discovery enabled. Trying to load module.
-2017-07-07 16:31:50.895763 [info] Service Discovery module loaded.
-2017-07-07 16:31:50.896050 [info] Application(Hello, 1313) is initialized (11, 100).
-2017-07-07 16:31:50.896227 [info] REQUEST(1313): [1234.5678:255.4294967295]
-2017-07-07 16:31:50.896920 [info] Starting vsomeip application "Hello" using 2 threads
-2017-07-07 16:31:50.897798 [info] Watchdog is disabled!
-2017-07-07 16:31:50.898392 [info] CLIENT: Service [1234.5678] is NOT available.
+2017-07-08 22:43:38.747856 [info] Parsed vsomeip configuration in 3ms
+2017-07-08 22:43:38.748270 [info] Using configuration file: "../src/client_config.json".
+2017-07-08 22:43:38.748452 [info] Default configuration module loaded.
+2017-07-08 22:43:38.748590 [info] Initializing vsomeip application "Hello".
+2017-07-08 22:43:38.749061 [info] SOME/IP client identifier configured. Using 1313 (was: 1313)
+2017-07-08 22:43:38.749194 [info] Instantiating routing manager [Host].
+2017-07-08 22:43:38.749484 [info] init_routing_endpoint Routing endpoint at /tmp/vsomeip-0
+2017-07-08 22:43:38.749912 [info] Client [1313] is connecting to [0] at /tmp/vsomeip-0
+2017-07-08 22:43:38.750108 [info] Service Discovery enabled. Trying to load module.
+2017-07-08 22:43:38.751179 [info] Service Discovery module loaded.
+2017-07-08 22:43:38.751454 [info] Application(Hello, 1313) is initialized (11, 100).
+2017-07-08 22:43:38.751630 [info] REQUEST(1313): [1234.5678:255.4294967295]
+2017-07-08 22:43:38.752333 [info] Starting vsomeip application "Hello" using 2 threads
+2017-07-08 22:43:38.753208 [info] Watchdog is disabled!
+2017-07-08 22:43:38.754175 [info] CLIENT: Service [1234.5678] is NOT available.
 
-2017-07-07 16:31:50.898839 [info] vSomeIP 2.6.2
-2017-07-07 16:31:50.899101 [info] Network interface "eth0" is up and running.
-2017-07-07 16:31:50.899586 [info] Routing is READY!
-2017-07-07 16:31:52.874472 [info] Stopping vsomeip application "Hello".
-2017-07-07 16:31:52.876644 [info] utility::auto_configuration_exit: munmap succeeded.
-2017-07-07 16:31:52.876895 [info] Exiting vsomeip application...
-[2017-07-07 16:31:50.887388] [0x000007efee3dfc78] [info]    Starting Client example
+2017-07-08 22:43:38.754268 [info] vSomeIP 2.6.2
+2017-07-08 22:43:38.754579 [info] Network interface "eth0" is up and running.
+2017-07-08 22:43:38.755019 [info] Routing is READY!
+2017-07-08 22:43:38.998589 [info] CLIENT: Service [1234.5678] is available.
+
+2017-07-08 22:43:38.999502 [error] Routing error. Client from remote service could not be found!
+2017-07-08 22:43:41.998173 [info] update_routing_info: elapsed=0 : delete service/instance 1234/5678
+2017-07-08 22:43:41.998618 [info] CLIENT: Service [1234.5678] is NOT available.
+
+2017-07-08 22:43:43.732732 [info] Stopping vsomeip application "Hello".
+2017-07-08 22:43:43.738996 [info] utility::auto_configuration_exit: munmap succeeded.
+2017-07-08 22:43:43.739255 [info] Exiting vsomeip application...
+[2017-07-08 22:43:38.742859] [0x000007fa68dec478] [info]    Starting client example

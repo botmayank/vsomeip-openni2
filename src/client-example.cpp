@@ -16,7 +16,7 @@
 #define SAMPLE_EVENTGROUP_ID 0x0666
 #define SAMPLE_EVENT_ID 0x0667
 
-//#define PUB_SUB
+#define PUB_SUB
 
 std::shared_ptr <vsomeip::application> app;
 std::mutex mutex;
@@ -56,9 +56,9 @@ void run() {
 
   std::set<vsomeip::eventgroup_t> its_groups;
   its_groups.insert(SAMPLE_EVENTGROUP_ID);
-  std::cout<< "Requesting event" << std::endl;
+  VSOMEIP_INFO<< "Requesting event" << std::endl;
   app->request_event(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_EVENT_ID, its_groups, true);
-  std::cout<< "Subscribing to event" << std::endl;
+  VSOMEIP_INFO<< "Subscribing to event" << std::endl;
   app->subscribe(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_EVENTGROUP_ID);
 
 }

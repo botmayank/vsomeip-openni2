@@ -16,7 +16,7 @@ import csv
 app_type = "client"
 
 # duration of application run before killing with SIGINT in seconds
-app_duration = 4
+app_duration = 5
 
 config_path = "../src/" + app_type + "_config.json"
 

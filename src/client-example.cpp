@@ -122,7 +122,7 @@ void on_availability(vsomeip::service_t _service, vsomeip::instance_t _instance,
 }
 
 int main() {
-    VSOMEIP_INFO<< "Starting Client example";
+    VSOMEIP_INFO<< "Starting client example";
     app = vsomeip::runtime::get()->create_application("Hello");
     app->init();
     app->register_availability_handler(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, on_availability);

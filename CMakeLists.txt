@@ -40,3 +40,6 @@ target_link_libraries(service-example vsomeip ${Boost_LIBRARIES})
 
 add_executable(client-example ./src/client-example.cpp)
 target_link_libraries(client-example vsomeip ${Boost_LIBRARIES})
+
+add_executable(service-camera ./src/service-camera.cpp ./src/grabber.cpp)
+target_link_libraries(service-camera vsomeip ${Boost_LIBRARIES})

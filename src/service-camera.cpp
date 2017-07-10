@@ -16,7 +16,7 @@
 #define SAMPLE_EVENTGROUP_ID 0x0666
 #define SAMPLE_EVENT_ID 0x0667
 
-//#define PUB_SUB
+// #define PUB_SUB
 #define VSOMEIP_ENABLE_SIGNAL_HANDLING
 
 std::shared_ptr <vsomeip::application> app;
@@ -51,17 +51,26 @@ void on_message(const std::shared_ptr<vsomeip::message> &_request){
     // read the data:
     // std::vector<vsomeip::byte_t> its_payload_data((std::istreambuf_iterator<char>(file)),
                               // std::istreambuf_iterator<char>());
-    std::cout<< "Sending file contents" << std::endl;
+    // std::cout<< "Sending file contents" << std::endl;
 
-    for(int i=13; i>=0; i--){
-        its_payload_data.push_back(i % 256);
-    }
+    // for(int i=13; i>=0; i--){
+    //     its_payload_data.push_back(i % 256);
+    // }
 
     // Fetch Camera gain and send back
     // int gain = grabber.getCameraGain();
     // its_payload_data.push_back(gain);
 
+    openni::RGB888Pixel* rgb_ptr = grabber.CaptureRGBFrame();
+    //Default resolutions 640x480px
+    //Writing matrix to file using opencv
+    cv::Mat color_mat(480, 640, CV_8UC3, rgb_ptr);
+    //Encode to single row matrix based on file format
+    cv::imencode(".jpg", color_mat, its_payload_data);
     
+    //cv::cvtColor(color_mat, color_mat, CV_RGB2BGR);
+    //cv::imwrite("Color.jpg", color_mat);
+
     its_payload->set_data(its_payload_data);
     its_response->set_payload(its_payload);
     app->send(its_response, true);
@@ -74,9 +83,9 @@ void notify_event(){
     while(true){
         its_data[0]++;
         payload->set_data(its_data, sizeof(its_data));
-        VSOMEIP_INFO<<"Sending data!"<< std::endl;
+        std::cout<<"Sending data!"<< std::endl;
         app->notify(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_EVENT_ID, payload);
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000)); 
+        // std::this_thread::sleep_for(std::chrono::milliseconds(1000)); 
     }
     
 } 
@@ -87,18 +96,20 @@ int main(){
     app->register_message_handler(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_METHOD_ID, on_message);
     app->offer_service(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID);
        
-   /* grabber.InitOpenNI();    
+    grabber.InitOpenNI();    
     grabber.InitDevice();
     grabber.InitDepthStream();
     grabber.InitColorStream();
     std::cout<< "Initialized Camera Streams!" << std::endl;
-    */
+    grabber.getColorFPS();
+    grabber.getDepthFPS();
+    
 
 #ifdef PUB_SUB
     std::set<vsomeip::eventgroup_t> its_groups;
     its_groups.insert(SAMPLE_EVENTGROUP_ID);
     app->offer_event(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_EVENT_ID, its_groups, true);
-    VSOMEIP_INFO<< "Offered event, set to notify with payload" << std::endl; 
+    std::cout<< "Offered event, set to notify with payload" << std::endl; 
    
     std::thread notifier(notify_event);
 #endif

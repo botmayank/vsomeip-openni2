@@ -50,6 +50,29 @@ int Grabber::getCameraGain()
     return settings->getGain(); 
 }
 
+
+int Grabber::getColorFPS()
+{
+    openni::VideoMode mode = color_stream_->getVideoMode();
+    int fps = mode.getFps();
+    if (fps!= 0)
+        {
+            printf("Color stream is at %d fps\n", fps);
+        }
+    return fps;
+}
+
+int Grabber::getDepthFPS()
+{
+    openni::VideoMode mode = depth_stream_->getVideoMode();
+    int fps = mode.getFps();
+    if (fps!= 0)
+        {
+            printf("Depth stream is at %d fps\n", fps);
+        }
+    return fps;
+}
+
 void Grabber::InitDepthStream()
 {
     depth_stream_ = new openni::VideoStream();
@@ -194,6 +217,23 @@ void Grabber::CapturePsenseColorFrame()
     cv::imshow("Color", color_mat);
 }
 
+openni::RGB888Pixel* Grabber::CaptureRGBFrame()
+{
+    auto rc = color_stream_->readFrame(color_frame_);
+
+    if (rc != openni::STATUS_OK)
+    {
+        printf("Read failed!\n%s\n", openni::OpenNI::getExtendedError());
+    }
+
+    printf("Height, Width of frame is: %d, %d\n", color_frame_->getHeight(), color_frame_->getWidth());
+    // Pointer to Primesense color frame
+    openni::RGB888Pixel* dev_buf_ptr = (openni::RGB888Pixel*) color_frame_->getData();
+   
+
+  return dev_buf_ptr;
+}
+
 void Grabber::Run()
 {
     openni::VideoStream* streams[] = {depth_stream_, color_stream_};
@@ -222,10 +262,12 @@ void Grabber::Run()
        }
 
         char c = cv::waitKey(10);
-        if ('q' == c)
+        if (c == 'q')
             break;
-        else if ('g' == c)
+        else if (c == 'g')
             this->getCameraGain();
+        else if (c == 'f')
+            this->getColorFPS();
             
    }
 }

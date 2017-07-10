@@ -13,6 +13,9 @@ public:
     void InitColorStream();
     void setColorStreamCrop(int originX, int originY, int width, int height);
     int getCameraGain();
+    int getColorFPS();
+    int getDepthFPS();
+    openni::RGB888Pixel* CaptureRGBFrame();
     void Run();
 
 private:

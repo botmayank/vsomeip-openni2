@@ -50,6 +50,29 @@ int Grabber::getCameraGain()
     return settings->getGain(); 
 }
 
+
+int Grabber::getColorFPS()
+{
+    openni::VideoMode mode = color_stream_->getVideoMode();
+    int fps = mode.getFps();
+    if (fps!= 0)
+        {
+            printf("Color stream is at %d fps\n", fps);
+        }
+    return fps;
+}
+
+int Grabber::getDepthFPS()
+{
+    openni::VideoMode mode = depth_stream_->getVideoMode();
+    int fps = mode.getFps();
+    if (fps!= 0)
+        {
+            printf("Depth stream is at %d fps\n", fps);
+        }
+    return fps;
+}
+
 void Grabber::InitDepthStream()
 {
     depth_stream_ = new openni::VideoStream();
@@ -222,10 +245,12 @@ void Grabber::Run()
        }
 
         char c = cv::waitKey(10);
-        if ('q' == c)
+        if (c == 'q')
             break;
-        else if ('g' == c)
+        else if (c == 'g')
             this->getCameraGain();
+        else if (c == 'f')
+            this->getColorFPS();
             
    }
 }

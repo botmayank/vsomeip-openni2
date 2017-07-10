@@ -85,25 +85,39 @@ void on_message(const std::shared_ptr<vsomeip::message> &_response){
       << ss.str() << std::endl;
 	*/
 
-	std::vector<char> *data;
+	std::vector<char> data;
 	//Make vector of bytes from payload
 	//std::vector<char> data(its_payload->get_data(), its_payload->get_data()+l);	
-
+	std::cout << "Length of payload is: " << l << std::endl;
 	for(vsomeip::length_t i = 0; i<l; i++)
 	{
-		data->push_back(*(its_payload->get_data()+i));
+		data.push_back(*(its_payload->get_data()+i));
+	//	std::cout<<"Payload byte " << i << "is: " << *(its_payload->get_data()+i) << std::endl;
 	}
 
+	cv::Mat imgbuf(cv::Size(640,480), CV_8UC3, its_payload->get_data());
+	cv::Mat img = imdecode(imgbuf, CV_LOAD_IMAGE_COLOR);
+	cv::cvtColor(img, img, cv::COLOR_BGR2RGB);
+
+
+	
+	//Try not to use vector called data for now
+/*
 	//Get payload for image, decode, write to file
-	cv::Mat rawData = cv::Mat(1,(int)l, CV_8UC1, data);
-	cv::Mat decodedImage = cv::imdecode(rawData, CV_LOAD_IMAGE_UNCHANGED);
+	cv::Mat rawData = cv::Mat(1, l, CV_8UC1, &data);
+	
+	//std::cout << "Raw data matrix from payload data is: " << rawData << std::endl;
+	
+	cv::Mat decodedImage = cv::imdecode(rawData, CV_LOAD_IMAGE_COLOR);
+	//std::cout << "Matrix after decoding: " << std::endl << decodedImage << std::endl;
+
 	if (decodedImage.data == NULL)
 	{
 		std::cout << "Error: Decoding image!" << std::endl;
 	}
 	else
-	{
-		bool rc = cv::imwrite("rgbframe.jpg", rawData); //Image data in BGR order for openCV
+*/	{
+		bool rc = cv::imwrite("rgbframe.jpg", img); //Image data in BGR order for openCV
 		if (rc == true)
 		{
 			std::cout <<"Writing rgbframe.jpg to file!" << std::endl;
@@ -112,7 +126,8 @@ void on_message(const std::shared_ptr<vsomeip::message> &_response){
 		{
 			std::cout <<"Error: Writing image to file failed!" << std::endl;
 		}
-	}
+	}/*
+*/
 }
 #endif
 

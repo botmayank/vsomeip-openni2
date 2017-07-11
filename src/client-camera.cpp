@@ -1,12 +1,10 @@
 #include <iomanip>
 #include <iostream>
 #include <sstream>
-
 #include <condition_variable>
 #include <thread>
-
 #include <vsomeip/vsomeip.hpp>
-
+#include <opencv2/opencv.hpp>
 #include "../../../../vsomeip/implementation/logging/include/logger.hpp"
 
 #define SAMPLE_SERVICE_ID 0x1234
@@ -16,11 +14,12 @@
 #define SAMPLE_EVENTGROUP_ID 0x0666
 #define SAMPLE_EVENT_ID 0x0667
 
-//#define PUB_SUB
+#define PUB_SUB
 
 std::shared_ptr <vsomeip::application> app;
 std::mutex mutex;
 std::condition_variable condition;
+bool use_tcp = true;
 
 #ifndef PUB_SUB
 void run(){
@@ -28,7 +27,7 @@ void run(){
 	condition.wait(its_lock);
 
 	std::shared_ptr < vsomeip::message > request;
-	request = vsomeip::runtime::get()->create_request();
+	request = vsomeip::runtime::get()->create_request(use_tcp);
 	request->set_service(SAMPLE_SERVICE_ID);
 	request->set_instance(SAMPLE_INSTANCE_ID);
 	request->set_method(SAMPLE_METHOD_ID);
@@ -39,12 +38,12 @@ void run(){
 	// for(vsomeip::byte_t i = 0; i< 10; i++){
 	// 	its_payload_data.push_back(i%256);
 	// }
-  its_payload_data.push_back(0); //Dummydata for request
+	its_payload_data.push_back(0); //Dummydata for request
 
 	its_payload->set_data(its_payload_data);
 	request->set_payload(its_payload);
-  // std::cout << "Requesting Camera Gain!" << std::endl;
-
+        //VSOMEIP_INFO << "Requesting RGB Image Gain!" << std::endl;
+	VSOMEIP_INFO << "Requesting RGB Image frame!";
 	app->send(request, true);
 }
 #endif
@@ -64,13 +63,14 @@ void run() {
 }
 #endif
 
-#ifndef PUB_SUB
+#ifdef PUB_SUB
 void on_message(const std::shared_ptr<vsomeip::message> &_response){
 
 	std::shared_ptr<vsomeip::payload> its_payload = _response->get_payload();
 	vsomeip::length_t l = its_payload->get_length();
 
-	//Get payload
+	//Get payload for gain
+	/*
 	std::stringstream ss;
 	for(vsomeip::length_t i = 0; i<l; i++){
 		ss << std::setw(2) << std::setfill('0')
@@ -82,10 +82,57 @@ void on_message(const std::shared_ptr<vsomeip::message> &_response){
       << std::setw(4) << std::setfill('0') << std::hex << _response->get_session() << "] "
       << std::endl << "Gain Value of camera as per remote host is: "
       << ss.str() << std::endl;
+	*/
+
+	std::vector<char> data;
+	//Make vector of bytes from payload
+	//std::vector<char> data(its_payload->get_data(), its_payload->get_data()+l);	
+	std::cout << "Length of payload is: " << l << std::endl;
+	for(vsomeip::length_t i = 0; i<l; i++)
+	{
+		data.push_back(*(its_payload->get_data()+i));
+	//	std::cout<<"Payload byte " << i << "is: " << *(its_payload->get_data()+i) << std::endl;
+	}
+
+	cv::Mat imgbuf(cv::Size(640,480), CV_8UC3, its_payload->get_data());
+	cv::Mat img = imdecode(imgbuf, CV_LOAD_IMAGE_COLOR);
+	cv::cvtColor(img, img, cv::COLOR_BGR2RGB);
+
+
+	
+	//Try not to use vector called data for now
+/*
+	//Get payload for image, decode, write to file
+	cv::Mat rawData = cv::Mat(1, l, CV_8UC1, &data);
+	
+	//std::cout << "Raw data matrix from payload data is: " << rawData << std::endl;
+	
+	cv::Mat decodedImage = cv::imdecode(rawData, CV_LOAD_IMAGE_COLOR);
+	//std::cout << "Matrix after decoding: " << std::endl << decodedImage << std::endl;
+
+	if (decodedImage.data == NULL)
+	{
+		std::cout << "Error: Decoding image!" << std::endl;
+	}
+	else
+*/
+	cv::imshow("RGB Image received", img);
+/*	{
+		bool rc = cv::imwrite("rgbframe.jpg", img); //Image data in BGR order for openCV
+		if (rc == true)
+		{
+			std::cout <<"Writing rgbframe.jpg to file!" << std::endl;
+		}
+		else
+		{
+			std::cout <<"Error: Writing image to file failed!" << std::endl;
+		}
+	}
+*/
 }
 #endif
 
-#ifdef PUB_SUB
+#ifndef PUB_SUB
 void on_message(const std::shared_ptr<vsomeip::message> &_response) {
     std::stringstream its_message;
     its_message << "CLIENT: received a notification for event ["

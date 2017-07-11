@@ -217,6 +217,28 @@ void Grabber::CapturePsenseColorFrame()
     cv::imshow("Color", color_mat);
 }
 
+openni::RGB888Pixel* Grabber::CaptureRGBFrame()
+{
+    // Read from stream to frame
+    auto rc = color_stream_->readFrame(color_frame_);
+    if (rc != openni::STATUS_OK)
+    {
+        printf("Read failed!\n%s\n", openni::OpenNI::getExtendedError());
+    }
+
+    // Pointer to Primesense color frame
+    openni::RGB888Pixel* dev_buf_ptr = (openni::RGB888Pixel*) color_frame_->getData();
+
+    printf("Height, Width of frame is : %d, %d\n", color_frame_->getHeight(), color_frame_->getWidth());
+    // // Make mat from camera data
+    // cv::Mat color_mat(color_frame_->getHeight(), color_frame_->getWidth(), CV_8UC3, dev_buf_ptr);
+    // // Convert to BGR format for OpenCV
+    // cv::cvtColor(color_mat, color_mat, CV_RGB2BGR);
+
+    // cv::imshow("Color", color_mat);
+    return dev_buf_ptr;
+}
+
 void Grabber::Run()
 {
     openni::VideoStream* streams[] = {depth_stream_, color_stream_};

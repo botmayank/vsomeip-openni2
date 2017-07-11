@@ -49,3 +49,6 @@ target_link_libraries(udp_client ${Boost_LIBRARIES})
 
 add_executable(service-camera ./src/service-camera.cpp ./src/grabber.cpp)
 target_link_libraries(service-camera vsomeip ${Boost_LIBRARIES})
+
+add_executable(client-camera ./src/client-camera.cpp ./src/grabber.cpp)
+target_link_libraries(client-camera vsomeip ${Boost_LIBRARIES})

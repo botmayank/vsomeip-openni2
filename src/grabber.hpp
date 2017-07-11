@@ -15,6 +15,7 @@ public:
     int getCameraGain();
     int getColorFPS();
     int getDepthFPS();
+    openni::RGB888Pixel* CaptureRGBFrame();
     void Run();
 
 private:

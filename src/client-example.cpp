@@ -16,7 +16,7 @@
 #define SAMPLE_EVENTGROUP_ID 0x0666
 #define SAMPLE_EVENT_ID 0x0667
 
-//#define PUB_SUB
+#define PUB_SUB
 
 std::shared_ptr <vsomeip::application> app;
 std::mutex mutex;
@@ -28,7 +28,7 @@ void run(){
 	condition.wait(its_lock);
 
 	std::shared_ptr < vsomeip::message > request;
-	request = vsomeip::runtime::get()->create_request();
+	request = vsomeip::runtime::get()->create_request(true);
 	request->set_service(SAMPLE_SERVICE_ID);
 	request->set_instance(SAMPLE_INSTANCE_ID);
 	request->set_method(SAMPLE_METHOD_ID);
@@ -70,18 +70,23 @@ void on_message(const std::shared_ptr<vsomeip::message> &_response){
 	std::shared_ptr<vsomeip::payload> its_payload = _response->get_payload();
 	vsomeip::length_t l = its_payload->get_length();
 
-	//Get payload
-	std::stringstream ss;
-	for(vsomeip::length_t i = 0; i<l; i++){
-		ss << std::setw(2) << std::setfill('0')
-			<< (int)*(its_payload->get_data()+i) << " ";
-	}
+	// //Get payload
+	// std::stringstream ss;
+	// for(vsomeip::length_t i = 0; i<l; i++){
+	// 	ss << std::setw(2) << std::setfill('0')
+	// 		<< (int)*(its_payload->get_data()+i) << " ";
+	// }
 
-	std::cout << "CLIENT: Received message with Client/Session ["
-      << std::setw(4) << std::setfill('0') << std::hex << _response->get_client() << "/"
-      << std::setw(4) << std::setfill('0') << std::hex << _response->get_session() << "] "
-      << std::endl << "Gain Value of camera as per remote host is: "
-      << ss.str() << std::endl;
+	// std::cout << "CLIENT: Received message with Client/Session ["
+ //      << std::setw(4) << std::setfill('0') << std::hex << _response->get_client() << "/"
+ //      << std::setw(4) << std::setfill('0') << std::hex << _response->get_session() << "] "
+ //      << std::endl << "Gain Value of camera as per remote host is: "
+ //      << ss.str() << std::endl;
+
+  //Make vecor of bytes from payload
+  std::vector<char> data(its_payload->get_data(), its_payload->get_data()+l);
+
+  
 }
 #endif
 

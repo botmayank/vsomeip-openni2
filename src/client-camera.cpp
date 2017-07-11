@@ -83,11 +83,11 @@ void on_message(const std::shared_ptr<vsomeip::message> &_response){
       << std::endl << "Gain Value of camera as per remote host is: "
       << ss.str() << std::endl;
 	*/
-
+  VSOMEIP_INFO << "Received Image!" <<std::endl;
 	std::vector<char> data;
 	//Make vector of bytes from payload
 	//std::vector<char> data(its_payload->get_data(), its_payload->get_data()+l);	
-	std::cout << "Length of payload is: " << l << std::endl;
+	// std::cout << "Length of payload is: " << l << std::endl;
 	for(vsomeip::length_t i = 0; i<l; i++)
 	{
 		data.push_back(*(its_payload->get_data()+i));
@@ -99,8 +99,7 @@ void on_message(const std::shared_ptr<vsomeip::message> &_response){
 	cv::cvtColor(img, img, cv::COLOR_BGR2RGB);
 
 
-	
-	//Try not to use vector called data for now
+//Try not to use vector called data for now
 /*
 	//Get payload for image, decode, write to file
 	cv::Mat rawData = cv::Mat(1, l, CV_8UC1, &data);
@@ -116,20 +115,34 @@ void on_message(const std::shared_ptr<vsomeip::message> &_response){
 	}
 	else
 */
-	cv::imshow("RGB Image received", img);
-/*	{
-		bool rc = cv::imwrite("rgbframe.jpg", img); //Image data in BGR order for openCV
-		if (rc == true)
-		{
-			std::cout <<"Writing rgbframe.jpg to file!" << std::endl;
-		}
-		else
-		{
-			std::cout <<"Error: Writing image to file failed!" << std::endl;
-		}
-	}
-*/
+	// cv::imshow("RGB Image", img);
+  // cv::waitKey(0);
+
+	// {
+	// 	bool rc = cv::imwrite("rgbframe.jpg", img); //Image data in BGR order for openCV
+	// 	if (rc == true)
+	// 	{
+	// 		std::cout <<"Writing rgbframe.jpg to file!" << std::endl;
+	// 	}
+	// 	else
+	// 	{
+	// 		std::cout <<"Error: Writing image to file failed!" << std::endl;
+	// 	}
+	// }
+
 }
+
+// void view()
+// {
+//   cv::Mat image = cv::imread("rgbframe.jpg", cv::IMREAD_COLOR);
+//   cv::imshow("RGB Image", image);
+//   cv::waitKey(0);
+// }
+
+
+
+
+
 #endif
 
 #ifndef PUB_SUB
@@ -180,6 +193,8 @@ VSOMEIP_INFO<< "Starting client example";
      std::cout << "Registering message handler" << std::endl;
      app->register_message_handler(vsomeip::ANY_SERVICE, vsomeip::ANY_INSTANCE, vsomeip::ANY_METHOD, on_message);
 #endif
+    cv::namedWindow("RGB Image", cv::WINDOW_AUTOSIZE);
     std::thread sender(run);
+    // std::thread viewer(view);
     app->start();
 }

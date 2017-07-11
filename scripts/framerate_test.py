@@ -13,10 +13,10 @@ import re
 import csv
 
 # application type client/service
-app_type = "client"
+app_type = "service"
 
 # duration of application run before killing with SIGINT in seconds
-app_duration = 5
+app_duration = 7
 
 config_path = "../src/" + app_type + "_config.json"
 
@@ -93,7 +93,7 @@ def parse(fileno, fieldnames):
             #     start_time = re.search(r'\d\d\.\d{6}', line).group()
             #     reading['start_timestamp'] = start_time
             #     print "Started at: " + start_time
-            if (line.find("Received Image!") != -1):
+            if (line.find("Sent Image!") != -1):
                 image_time = re.search(r'\d\d\.\d{6}', line).group()
                 reading['frame_timestamp'].append(image_time)
             # elif (line.find("Routing is READY!") != -1):
@@ -156,7 +156,7 @@ def main():
         print "Running measurement " + str(i)
         run_measurement(i)
         time.sleep(0.05)
-        parse(i, fieldnames)
+       # parse(i, fieldnames)
         time.sleep(0.05)   
 
     sys.exit(0)

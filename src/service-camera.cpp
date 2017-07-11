@@ -75,6 +75,7 @@ void on_message(const std::shared_ptr<vsomeip::message> &_request){
     its_payload->set_data(its_payload_data);
     its_response->set_payload(its_payload);
     app->send(its_response, true);
+    VSOMEIP_INFO<<"Sent Image!"<<std::endl;
 }
 
 void notify_event(){

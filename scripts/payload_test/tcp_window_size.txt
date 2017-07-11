@@ -1,0 +1,3 @@
+10998	14667	21996
+Min	Def	Max
+TCP Window size in Bytes for rpi

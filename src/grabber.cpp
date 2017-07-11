@@ -226,7 +226,7 @@ openni::RGB888Pixel* Grabber::CaptureRGBFrame()
         printf("Read failed!\n%s\n", openni::OpenNI::getExtendedError());
     }
 
-    printf("Height, Width of frame is: %d, %d\n", color_frame_->getHeight(), color_frame_->getWidth());
+    //printf("Height, Width of frame is: %d, %d\n", color_frame_->getHeight(), color_frame_->getWidth());
     // Pointer to Primesense color frame
     openni::RGB888Pixel* dev_buf_ptr = (openni::RGB888Pixel*) color_frame_->getData();
    

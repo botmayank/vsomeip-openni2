@@ -16,7 +16,7 @@
 #define SAMPLE_EVENTGROUP_ID 0x0666
 #define SAMPLE_EVENT_ID 0x0667
 
-// #define PUB_SUB
+#define PUB_SUB
 #define VSOMEIP_ENABLE_SIGNAL_HANDLING
 
 std::shared_ptr <vsomeip::application> app;
@@ -44,6 +44,7 @@ void on_message(const std::shared_ptr<vsomeip::message> &_request){
     std::shared_ptr <vsomeip::message> its_response = vsomeip::runtime::get()->create_response(_request);
     its_payload = vsomeip::runtime::get()->create_payload();
     std::vector <vsomeip::byte_t> its_payload_data;
+
 
     // std::cout << "Creating response" << std::endl;
     // std::ifstream file("cat.jpg", std::ios::binary);
@@ -77,18 +78,36 @@ void on_message(const std::shared_ptr<vsomeip::message> &_request){
 }
 
 void notify_event(){
-    vsomeip::byte_t its_data[] = {0x10};
     std::shared_ptr <vsomeip::payload> payload = vsomeip::runtime::get()->create_payload();
+    std::vector <vsomeip::byte_t> payload_data;
+
+    while(true)
+   {
+    openni::RGB888Pixel* rgb_ptr = grabber.CaptureRGBFrame();
+    //Default resolutions 640x480px
+    //Writing matrix to file using opencv RGB
+    cv::Mat color_mat(480, 640, CV_8UC3, rgb_ptr);
+    //Encode to single row matrix based on file format
+    cv::imencode(".jpg", color_mat, payload_data);
     
-    while(true){
+    //cv::cvtColor(color_mat, color_mat, CV_RGB2BGR);
+    //cv::imwrite("Color.jpg", color_mat);
+
+    //payload_data.push_back(1);
+    payload->set_data(payload_data);
+    app->notify(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_EVENT_ID, payload);
+   }
+/*
+while(true){
         its_data[0]++;
         payload->set_data(its_data, sizeof(its_data));
         std::cout<<"Sending data!"<< std::endl;
         app->notify(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_EVENT_ID, payload);
         // std::this_thread::sleep_for(std::chrono::milliseconds(1000)); 
     }
-    
+*/  
 } 
+
 int main(){
     VSOMEIP_INFO << "Starting service example";
     app = vsomeip::runtime::get()->create_application("World");

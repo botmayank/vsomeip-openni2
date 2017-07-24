@@ -37,3 +37,6 @@ target_link_libraries(udp_client ${Boost_LIBRARIES})
 
 add_executable(client-camera ./src/client-camera.cpp)
 target_link_libraries(client-camera vsomeip ${Boost_LIBRARIES} ${OpenCV_LIBS})
+
+add_executable(async_udp ./src/async_udp_echo_server.cpp)
+target_link_libraries(async_udp ${Boost_LIBRARIES})

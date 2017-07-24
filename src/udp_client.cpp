@@ -36,7 +36,7 @@ private:
 int main()
 {
 	boost::asio::io_service io_service;
-	UDPClient client(io_service, "192.168.0.100", "1337");
+	UDPClient client(io_service, "192.168.0.104", "1337");
 	std::cout <<"Sending Hello World! to pi:1337" << std::endl;
 	client.send("Hello, World!");
 }
